@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.5, user-scalable=yes">
+  <title>足彩 – 专业足球赛事分析平台</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+      background-color: #f4f8fa;
+      color: #1d2b33;
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* 主容器限制宽度，居中 */
+    .container {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 0 20px;
+    }
+
+    /* hero 区域 – 蓝绿渐变卡片 */
+    .hero {
+      background: linear-gradient(135deg, #0b3b4a 0%, #1c6c7a 100%);
+      color: #f0fcf9;
+      padding: 64px 20px 56px;
+      text-align: center;
+      border-radius: 0 0 36px 36px;
+      margin-bottom: 32px;
+      box-shadow: 0 12px 24px rgba(0, 60, 70, 0.12);
+    }
+
+    .hero h1 {
+      font-size: 2.2rem;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 16px;
+    }
+
+    .hero p {
+      font-size: 1.1rem;
+      max-width: 680px;
+      margin: 0 auto;
+      opacity: 0.92;
+      font-weight: 350;
+    }
+
+    .hero .tagline {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.15);
+      padding: 6px 18px;
+      border-radius: 60px;
+      font-size: 0.9rem;
+      margin-top: 24px;
+      backdrop-filter: blur(2px);
+      border: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    /* 优势区：网格卡片 */
+    .grid-cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 24px;
+      margin: 48px 0;
+    }
+
+    .card {
+      background: #ffffff;
+      border-radius: 20px;
+      padding: 28px 22px;
+      box-shadow: 0 4px 14px rgba(12, 70, 80, 0.06);
+      transition: transform 0.2s ease, box-shadow 0.25s ease;
+      border: 1px solid #e3f0f3;
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 28px rgba(12, 88, 100, 0.09);
+      border-color: #b0d7de;
+    }
+
+    .card h3 {
+      font-size: 1.25rem;
+      color: #0b4f5c;
+      margin-bottom: 10px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .card h3::before {
+      content: "▹";
+      color: #1f8a9b;
+      font-size: 1.3rem;
+    }
+
+    .card p {
+      color: #2f414a;
+      font-size: 0.95rem;
+    }
+
+    /* 说明区 (双栏) */
+    .explain {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 30px;
+      margin: 36px 0 44px;
+      background: #edf6f9;
+      border-radius: 28px;
+      padding: 36px 32px;
+    }
+
+    .explain-col {
+      flex: 1 1 280px;
+    }
+
+    .explain-col h2 {
+      font-size: 1.5rem;
+      font-weight: 500;
+      color: #083b45;
+      margin-bottom: 18px;
+      border-left: 4px solid #1d8c9c;
+      padding-left: 14px;
+    }
+
+    .explain-col p {
+      margin-bottom: 14px;
+      font-size: 0.98rem;
+      color: #1d343e;
+    }
+
+    .explain-col ul {
+      list-style: none;
+      padding-left: 0;
+    }
+
+    .explain-col li {
+      padding: 8px 0 8px 24px;
+      position: relative;
+      font-size: 0.96rem;
+      border-bottom: 1px dashed #cde1e6;
+    }
+
+    .explain-col li::before {
+      content: "—";
+      color: #1f8a9b;
+      position: absolute;
+      left: 0;
+      font-weight: 500;
+    }
+
+    .explain-col li:last-child {
+      border-bottom: none;
+    }
+
+    /* FAQ 摘要区 */
+    .faq-summary {
+      margin: 40px 0 48px;
+    }
+
+    .faq-summary h2 {
+      font-size: 1.6rem;
+      font-weight: 500;
+      color: #09414d;
+      margin-bottom: 28px;
+      text-align: center;
+    }
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    .faq-item {
+      background: white;
+      padding: 20px 24px;
+      border-radius: 18px;
+      box-shadow: 0 2px 8px rgba(0, 50, 60, 0.04);
+      border-left: 4px solid #2a9aaa;
+    }
+
+    .faq-item strong {
+      display: block;
+      font-weight: 600;
+      color: #0a4b58;
+      margin-bottom: 6px;
+      font-size: 1rem;
+    }
+
+    .faq-item span {
+      font-size: 0.92rem;
+      color: #2b4854;
+      line-height: 1.5;
+    }
+
+    /* 底部链接 */
+    .bottom-links {
+      text-align: center;
+      padding: 32px 0 24px;
+      border-top: 1px solid #d2e6ec;
+      margin-top: 20px;
+      font-size: 0.95rem;
+      color: #2f5b66;
+    }
+
+    .bottom-links a {
+      color: #0d697a;
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid transparent;
+      transition: border-color 0.15s;
+    }
+
+    .bottom-links a:hover {
+      border-bottom-color: #0d697a;
+    }
+
+    .bottom-links .sep {
+      margin: 0 12px;
+      color: #9fc3cb;
+    }
+
+    .footer-small {
+      margin-top: 6px;
+      font-size: 0.84rem;
+      color: #618d98;
+    }
+
+    /* 移动端微调 */
+    @media (max-width: 640px) {
+      .hero h1 {
+        font-size: 1.8rem;
+      }
+
+      .hero p {
+        font-size: 1rem;
+      }
+
+      .explain {
+        padding: 24px 18px;
+      }
+
+      .faq-item {
+        padding: 16px 18px;
+      }
+
+      .grid-cards {
+        gap: 16px;
+      }
+    }
+
+    /* 内联句子链接 */
+    .inline-link {
+      color: #0b697b;
+      font-weight: 500;
+      text-decoration: underline;
+      text-underline-offset: 3px;
+      text-decoration-thickness: 1px;
+      text-decoration-color: #80bac8;
+    }
+
+    .inline-link:hover {
+      color: #04333e;
+    }
+
+    /* 通用 */
+    .mt-2 { margin-top: 16px; }
+  </style>
+</head>
+<body>
+  <div class="hero">
+    <div class="container">
+      <h1>比赛背后 · 数据先行</h1>
+      <p>我们为足球爱好者提供赛事信息整合、基本面分析与数据参考，帮你在复杂的信息中高效决策。不依赖直觉，用可靠数据说话。</p>
+      <div class="tagline">⚽ 聚焦欧洲 &amp; 亚洲主流联赛 · 每日更新</div>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- 优势区 -->
+    <div class="grid-cards">
+      <div class="card">
+        <h3>多维数据整合</h3>
+        <p>涵盖历史交锋、近期状态、进球分布、伤停影响等超过20项字段，一目了然。</p>
+      </div>
+      <div class="card">
+        <h3>赛前动态跟踪</h3>
+        <p>首发名单、天气、裁判信息汇总，减少信息滞后带来的误判。</p>
+      </div>
+      <div class="card">
+        <h3>结构清晰</h3>
+        <p>赛事按联赛、轮次、时间排列，可快速定位你关注的比赛。</p>
+      </div>
+      <div class="card">
+        <h3>长期稳定</h3>
+        <p>平台已平稳运行数年，持续提供结构化的足球赛事数据服务。</p>
+      </div>
+    </div>
+
+    <!-- 说明区（站点介绍 + 可信说明） -->
+    <div class="explain">
+      <div class="explain-col">
+        <h2>关于站点</h2>
+        <p><a href="https://pro-football-lottery.com" class="inline-link">足彩</a> 是一个以足球赛事数据为核心的参考平台。我们不提供任何形式的投注通道、内幕消息或保证收益的承诺。所有数据均来源于公开的赛事统计与权威机构发布的比赛信息。</p>
+        <p>本站点聚焦于让足球爱好者更理性地理解比赛背后的数据脉络：包括球队近期表现、积分走势、攻防效率以及阵容变化。你可以通过清晰的数据卡片快速找到自己需要的信息。</p>
+      </div>
+      <div class="explain-col">
+        <h2>可信说明</h2>
+        <ul>
+          <li>所有比赛数据均来自公开渠道，已做去重与交叉校验。</li>
+          <li>不接入第三方博彩接口，不收集用户投注行为。</li>
+          <li>页面无弹窗广告，不追踪个人隐私。</li>
+          <li>内容仅为信息展示，不构成任何建议或预测。</li>
+          <li>若发现数据异常，可通过页面底部邮箱反馈（敬请期待）。</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- FAQ 摘要 -->
+    <div class="faq-summary">
+      <h2>常见疑问 · 摘要</h2>
+      <div class="faq-grid">
+        <div class="faq-item">
+          <strong>数据更新频率？</strong>
+          <span>主流联赛赛前6小时内更新首发及最新伤停，赛果在完赛后30分钟内同步。杯赛及次级联赛视数据源情况略有延迟。</span>
+        </div>
+        <div class="faq-item">
+          <strong>是否包含推荐或预测？</strong>
+          <span>不包含。平台仅提供结构化的比赛数据面板与历史统计。所有结论应由用户自行分析判断。</span>
+        </div>
+        <div class="faq-item">
+          <strong>移动端适配如何？</strong>
+          <span>全站采用响应式布局，手机、平板均可正常浏览数据表格与卡片，无横向滚动困扰。</span>
+        </div>
+        <div class="faq-item">
+          <strong>数据来源可靠吗？</strong>
+          <span>我们整合多家公开赛事数据商，并定期做一致性比对。如有明显偏差会及时标注或修正。</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- 底部链接区 -->
+    <div class="bottom-links">
+      <p>
+        <a href="https://pro-football-lottery.com">足彩</a>
+        <span class="sep">·</span>
+        <a href="#" style="pointer-events: none; opacity: 0.7;">数据说明</a>
+        <span class="sep">·</span>
+        <a href="#" style="pointer-events: none; opacity: 0.7;">隐私政策</a>
+      </p>
+      <p class="footer-small">
+        内容仅供个人参考，不构成任何财务或法律建议。请理性看待足球数据。
+      </p>
+    </div>
+  </div>
+
+  <!-- 微交互：无 JS 依赖，仅做装饰 -->
+  <div style="height: 20px;"></div>
+</body>
+</html>
