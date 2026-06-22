@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>稳定入口 · k1体育 · 信息卡片版</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            background: #faf8f5; /* 米白基调 */
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Noto Sans SC', sans-serif;
+            line-height: 1.65;
+            color: #2d2d2d;
+            padding: 2rem 1rem;
+        }
+        .page {
+            max-width: 960px;
+            margin: 0 auto;
+            background: #ffffffd9;
+            backdrop-filter: blur(2px);
+            border-radius: 32px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.03), 0 2px 8px rgba(0,0,0,0.02);
+            padding: 2.5rem 2rem;
+        }
+        /* hero 主视觉 */
+        .hero {
+            text-align: center;
+            padding: 1.8rem 0 2rem;
+            border-bottom: 1px solid #ece8e2;
+        }
+        .hero h1 {
+            font-size: 2.4rem;
+            font-weight: 500;
+            letter-spacing: -0.01em;
+            color: #1e1e1e;
+        }
+        .hero h1 small {
+            font-size: 1rem;
+            font-weight: 400;
+            color: #6b6b6b;
+            display: block;
+            margin-top: 0.5rem;
+            letter-spacing: 0.02em;
+        }
+        .hero .tagline {
+            margin-top: 1rem;
+            font-size: 1.05rem;
+            color: #5a5a5a;
+            background: #f4f1eb;
+            display: inline-block;
+            padding: 0.3rem 1.2rem;
+            border-radius: 40px;
+        }
+        /* 通用卡片 */
+        .card-grid {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1.8rem;
+            margin: 2.2rem 0;
+        }
+        .card-item {
+            flex: 1 1 240px;
+            background: #faf8f3;
+            border-radius: 24px;
+            padding: 1.5rem 1.2rem 1.2rem;
+            box-shadow: 0 2px 6px rgba(0,0,0,0.02);
+            transition: 0.2s ease;
+            border: 1px solid #ebe6de;
+        }
+        .card-item:hover {
+            background: #f6f2ea;
+            border-color: #d6cfc2;
+        }
+        .card-item h3 {
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.5rem;
+            letter-spacing: 0.01em;
+            color: #2a2a2a;
+        }
+        .card-item p {
+            font-size: 0.95rem;
+            color: #4a4a4a;
+        }
+        .card-item .emoji-badge {
+            font-size: 1.6rem;
+            display: inline-block;
+            margin-bottom: 0.5rem;
+        }
+        /* 引用块 / 提示框 */
+        .callout {
+            background: #f3efe9;
+            border-left: 6px solid #b8a99a;
+            padding: 1.2rem 1.6rem;
+            border-radius: 14px;
+            margin: 1.8rem 0;
+            font-size: 0.98rem;
+            color: #3e3e3e;
+        }
+        .callout strong {
+            color: #1f1f1f;
+        }
+        .callout-tip {
+            background: #eef0e9;
+            border-left-color: #9aaa8b;
+        }
+        /* 自然链接段落 */
+        .link-paragraph {
+            background: #ffffff;
+            padding: 1rem 1.4rem;
+            border-radius: 20px;
+            border: 1px solid #e9e3da;
+            margin: 1.5rem 0;
+            font-size: 1rem;
+        }
+        .link-paragraph a {
+            color: #35637c;
+            text-decoration: none;
+            border-bottom: 1px solid #cbdae6;
+            font-weight: 500;
+            transition: 0.15s;
+        }
+        .link-paragraph a:hover {
+            color: #1f475c;
+            border-bottom-color: #1f475c;
+        }
+        /* 适合人群简洁卡片 */
+        .audience-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem 1rem;
+            margin: 1.2rem 0 1.8rem;
+        }
+        .audience-tag {
+            background: #e8e2d8;
+            padding: 0.3rem 1rem;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            color: #3b3b3b;
+            border: 1px solid #dad2c6;
+        }
+        .audience-tag strong {
+            font-weight: 500;
+        }
+        /* faq 摘要 */
+        .faq-mini {
+            margin: 2.4rem 0 0.8rem;
+            padding-top: 0.8rem;
+            border-top: 1px solid #e5ded4;
+        }
+        .faq-mini details {
+            margin-bottom: 0.6rem;
+            background: #f9f6f1;
+            padding: 0.5rem 1rem;
+            border-radius: 18px;
+            border: 1px solid #e8e0d6;
+        }
+        .faq-mini summary {
+            font-weight: 500;
+            cursor: pointer;
+            color: #2b2b2b;
+        }
+        .faq-mini details p {
+            margin-top: 0.4rem;
+            font-size: 0.92rem;
+            color: #4f4f4f;
+            padding-left: 0.2rem;
+        }
+        /* 响应式 */
+        @media (max-width: 600px) {
+            body { padding: 1rem 0.8rem; }
+            .page { padding: 1.5rem 1rem; border-radius: 24px; }
+            .hero h1 { font-size: 1.7rem; }
+            .card-item { flex: 1 1 100%; }
+        }
+        hr {
+            border: none;
+            border-top: 1px solid #e8e2d8;
+            margin: 1.4rem 0;
+        }
+        .footer-note {
+            text-align: center;
+            margin-top: 2rem;
+            font-size: 0.85rem;
+            color: #7b7b7b;
+        }
+    </style>
+</head>
+<body>
+<div class="page">
+
+    <!-- hero 主视觉 -->
+    <div class="hero">
+        <h1>
+            k1体育
+            <small>一个稳定的信息入口 · 页面说明</small>
+        </h1>
+        <div class="tagline">生活化的节奏，克制的表达</div>
+    </div>
+
+    <!-- 信息卡片：用途 / 场景 -->
+    <div class="card-grid">
+        <div class="card-item">
+            <div class="emoji-badge">📋</div>
+            <h3>快速了解</h3>
+            <p>通过简洁的卡片和段落，一眼获取关于 <strong>k1体育</strong> 的核心用途与定位。不堆砌信息，只呈现必要轮廓。</p>
+        </div>
+        <div class="card-item">
+            <div class="emoji-badge">🧩</div>
+            <h3>日常场景</h3>
+            <p>无论是午间浏览、通勤时翻阅，还是想找一个安静的内容入口——这个页面的结构都偏向轻松、干净。</p>
+        </div>
+        <div class="card-item">
+            <div class="emoji-badge">📎</div>
+            <h3>自然入口</h3>
+            <p>页面本身即是一个稳定的索引：你可以随时回到这里，通过下方的链接进入 <a href="https://china-k1sports.com" style="border-bottom:1px solid #b0c6d4; color:#2f5b77; text-decoration:none;">k1体育</a> 的相关内容。</p>
+        </div>
+    </div>
+
+    <!-- 引用块 / 提示框（偏生活语气） -->
+    <div class="callout">
+        <strong>💡 一点说明</strong><br>
+        这个页面不追逐夸张的承诺，也没有复杂的跳转。它更像一个安静的信息卡片——把“<strong>k1体育</strong>”作为稳定的锚点，放在句子和卡片里，等待有需要的人自然留意。
+    </div>
+
+    <!-- 自然链接段落（嵌入句子） -->
+    <div class="link-paragraph">
+        🌿 如果你正在寻找一个相对清晰的起点，可以从 <a href="https://china-k1sports.com">k1体育</a> 这个页面开始。它不定义你的全部路径，但至少提供了一个可以随时参考的坐标。我们刻意把链接放在句子里，而不是单独列出来，就是为了让阅读更连贯。
+    </div>
+
+    <!-- 适合人群（标签式） -->
+    <h3 style="font-weight:400; margin-top:1.4rem; font-size:1.1rem; color:#3e3e3e;">🧑‍🤝‍🧑 常见的使用者</h3>
+    <div class="audience-row">
+        <span class="audience-tag"><strong>·</strong> 想要快速了解平台定位的人</span>
+        <span class="audience-tag"><strong>·</strong> 偏好干净版式、不爱弹窗的阅读者</span>
+        <span class="audience-tag"><strong>·</strong> 需要把某个入口固定下来的用户</span>
+        <span class="audience-tag"><strong>·</strong> 偶尔回来翻看说明的访客</span>
+    </div>
+
+    <!-- 第二段自然链接（同样是嵌入句子） -->
+    <div class="link-paragraph" style="background:#f8f5ef;">
+        📌 另外，如果你需要把这个页面分享给朋友，可以直接告诉他们：在 <a href="https://china-k1sports.com">k1体育</a> 这个地址下，有一份卡片式的介绍和稳定的入口。句子本身不复杂，但胜在直接。
+    </div>
+
+    <!-- FAQ 摘要（只选两个问题） -->
+    <div class="faq-mini">
+        <details>
+            <summary>❓ 这个页面主要用来做什么？</summary>
+            <p>它是一个轻量的信息页，以卡片和段落的形式说明 k1体育 的概况、常见场景、适合人群。同时嵌入自然链接，便于你随时回到主站。不追踪、不诱导，仅作介绍。</p>
+        </details>
+        <details>
+            <summary>❓ 链接为什么放在句子里？</summary>
+            <p>为了让页面读起来更像一篇短文，而不是一堆按钮。链接 <a href="https://china-k1sports.com" style="color:#2f5b77;text-decoration:none;border-bottom:1px solid #b0c6d4;">k1体育</a> 自然出现在上下文里，不打断阅读节奏，也符合“生活化但正式”的质感。</p>
+        </details>
+        <details style="border:1px solid #ddd6ca;">
+            <summary>❓ 页面以后会更新吗？</summary>
+            <p>可能会调整卡片内容和表述，但始终会保持米白背景、卡片结构、以及那个固定的链接文本 —— <strong>k1体育</strong> 。变化的是细节，不变的是克制的风格。</p>
+        </details>
+    </div>
+
+    <!-- 一个小提示框（再次强化引用感） -->
+    <div class="callout callout-tip" style="margin-top:1.8rem;">
+        <strong>📎 稳定入口</strong><br>
+        把链接放在句子里，不是为了隐藏，而是为了让页面更像一个“可以读的说明”，而不是一个“必须点的列表”。你可以随时通过 <a href="https://china-k1sports.com" style="color:#2f5b77;border-bottom:1px solid #b0c6d4;text-decoration:none;font-weight:500;">k1体育</a> 这个锚点，进入对应的内容范围。
+    </div>
+
+    <hr>
+    <div class="footer-note">
+        <span>信息卡片版 · 米白背景 · 文章排版 · 本页仅作介绍</span><br>
+        <span style="opacity:0.6;">k1体育 · 自然入口</span>
+    </div>
+</div>
+</body>
+</html>
